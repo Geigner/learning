@@ -1081,20 +1081,12 @@
       "allText": "15/09/2026 12:14:09 אילנה שחר 11-12 תמיר וקארין תרומה לקהילה       "
     },
     {
-      "timestamp": "15/09/2026 12:34:43",
-      "month": "09/2026",
-      "teacher": "אינסה נוביקוב",
-      "studentName": "12-13",
-      "content": "מקסים Vocabulary  |  |  |  | ",
-      "allText": "15/09/2026 12:34:43 אינסה נוביקוב 12-13 מקסים vocabulary        "
-    },
-    {
       "timestamp": "15/09/2026 12:43:48",
       "month": "09/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "12-13",
-      "content": "לוקה Vocabulary  | לריק Unseen  |  |  | ",
-      "allText": "15/09/2026 12:43:48 אינסה נוביקוב 12-13 לוקה vocabulary  לריק unseen       "
+      "content": "לוקה Vocabulary  | לארי Unseen  | מקסים  |  | ",
+      "allText": "15/09/2026 12:43:48 אינסה נוביקוב 12-13 לוקה vocabulary  לארי unseen  מקסים      "
     }
   ],
   "studentsMapping": {
