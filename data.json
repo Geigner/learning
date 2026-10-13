@@ -1631,6 +1631,22 @@
       "studentName": "10-11",
       "content": "ללא תלמידים |  |  |  | ",
       "allText": "13/10/2026 11:03:39 אורי סלע 10-11 ללא תלמידים       "
+    },
+    {
+      "timestamp": "13/10/2026 11:41:38",
+      "month": "10/2026",
+      "teacher": "אינסה נוביקוב",
+      "studentName": "10-11",
+      "content": "שקדUnseen, Vocabulary  |  |  |  | ",
+      "allText": "13/10/2026 11:41:38 אינסה נוביקוב 10-11 שקדunseen, vocabulary        "
+    },
+    {
+      "timestamp": "13/10/2026 11:43:31",
+      "month": "10/2026",
+      "teacher": "אינסה נוביקוב",
+      "studentName": "11-12",
+      "content": "ריאן  ,sounds,  letters |  |  |  | ",
+      "allText": "13/10/2026 11:43:31 אינסה נוביקוב 11-12 ריאן  ,sounds,  letters       "
     }
   ],
   "studentsMapping": {
