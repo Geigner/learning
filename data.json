@@ -1637,8 +1637,8 @@
       "month": "10/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "10-11",
-      "content": "שקדUnseen, Vocabulary  |  |  |  | ",
-      "allText": "13/10/2026 11:41:38 אינסה נוביקוב 10-11 שקדunseen, vocabulary        "
+      "content": "שקד Unseen, Vocabulary  |  |  |  | ",
+      "allText": "13/10/2026 11:41:38 אינסה נוביקוב 10-11 שקד unseen, vocabulary        "
     },
     {
       "timestamp": "13/10/2026 11:43:31",
@@ -1661,32 +1661,40 @@
       "month": "10/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "12-13",
-      "content": "Prepositions, exercises  | אלירז  Unseen, Vocabulary  |  |  | ",
-      "allText": "13/10/2026 12:21:03 אינסה נוביקוב 12-13 prepositions, exercises  אלירז  unseen, vocabulary       "
-    },
-    {
-      "timestamp": "13/10/2026 12:27:50",
-      "month": "10/2026",
-      "teacher": "אינסה נוביקוב",
-      "studentName": "12-13",
-      "content": "מקסים Vocabulary  |  |  |  | ",
-      "allText": "13/10/2026 12:27:50 אינסה נוביקוב 12-13 מקסים vocabulary        "
+      "content": " קארין | אלירז  Unseen, Vocabulary  | מקסים Vocabulary  |  | ",
+      "allText": "13/10/2026 12:21:03 אינסה נוביקוב 12-13  קארין אלירז  unseen, vocabulary  מקסים vocabulary      "
     },
     {
       "timestamp": "13/10/2026 12:38:04",
       "month": "10/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "13-14",
-      "content": "מקסים Pronouns, exercises  |  |  |  | ",
-      "allText": "13/10/2026 12:38:04 אינסה נוביקוב 13-14 מקסים pronouns, exercises        "
+      "content": "מקסים Pronouns, exercises  | קארין Unseen |  |  | ",
+      "allText": "13/10/2026 12:38:04 אינסה נוביקוב 13-14 מקסים pronouns, exercises  קארין unseen      "
     },
     {
-      "timestamp": "13/10/2026 13:09:55",
+      "timestamp": "13/10/2026 14:48:34",
       "month": "10/2026",
-      "teacher": "אינסה נוביקוב",
+      "teacher": "אילנה שחר",
+      "studentName": "12-13",
+      "content": "ללא תלמידים  |  |  |  | ",
+      "allText": "13/10/2026 14:48:34 אילנה שחר 12-13 ללא תלמידים        "
+    },
+    {
+      "timestamp": "13/10/2026 14:48:55",
+      "month": "10/2026",
+      "teacher": "אילנה שחר",
       "studentName": "13-14",
-      "content": "קארין Unseen |  |  |  | ",
-      "allText": "13/10/2026 13:09:55 אינסה נוביקוב 13-14 קארין unseen       "
+      "content": "שקד פרק תנך  |  |  |  | ",
+      "allText": "13/10/2026 14:48:55 אילנה שחר 13-14 שקד פרק תנך        "
+    },
+    {
+      "timestamp": "13/10/2026 14:50:33",
+      "month": "10/2026",
+      "teacher": "אורי סלע",
+      "studentName": "11-12",
+      "content": "שקד  |  |  |  | ",
+      "allText": "13/10/2026 14:50:33 אורי סלע 11-12 שקד        "
     }
   ],
   "studentsMapping": {
