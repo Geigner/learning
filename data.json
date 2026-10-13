@@ -1647,6 +1647,14 @@
       "studentName": "11-12",
       "content": "ריאן  ,sounds,  letters |  |  |  | ",
       "allText": "13/10/2026 11:43:31 אינסה נוביקוב 11-12 ריאן  ,sounds,  letters       "
+    },
+    {
+      "timestamp": "13/10/2026 12:01:53",
+      "month": "10/2026",
+      "teacher": "אורי סלע",
+      "studentName": "12-13",
+      "content": "שקד-קוי אורך ורוחב. |  |  |  | ",
+      "allText": "13/10/2026 12:01:53 אורי סלע 12-13 שקד-קוי אורך ורוחב.       "
     }
   ],
   "studentsMapping": {
