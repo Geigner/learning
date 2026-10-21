@@ -1925,16 +1925,16 @@
       "month": "10/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "10-11",
-      "content": "קארין . Oral Speech  | איה   Ora Speech  |  |  | ",
-      "allText": "20/10/2026 10:46:45 אינסה נוביקוב 10-11 קארין . oral speech  איה   ora speech       "
+      "content": "קארין . Oral Speech  | אייה   Ora Speech  |  |  | ",
+      "allText": "20/10/2026 10:46:45 אינסה נוביקוב 10-11 קארין . oral speech  אייה   ora speech       "
     },
     {
       "timestamp": "20/10/2026 10:51:42",
       "month": "10/2026",
       "teacher": "אילנה שחר",
       "studentName": "10-11",
-      "content": "אלירז וליאל חא הגיעו |  |  |  | ",
-      "allText": "20/10/2026 10:51:42 אילנה שחר 10-11 אלירז וליאל חא הגיעו       "
+      "content": "ללא תלמידים  |  |  |  | ",
+      "allText": "20/10/2026 10:51:42 אילנה שחר 10-11 ללא תלמידים        "
     },
     {
       "timestamp": "20/10/2026 11:05:35",
@@ -1949,8 +1949,8 @@
       "month": "10/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "11-12",
-      "content": "איה Pronouns, exercises  | ריאן  sounds, letters  | עליה Unseen  |  | ",
-      "allText": "20/10/2026 11:22:58 אינסה נוביקוב 11-12 איה pronouns, exercises  ריאן  sounds, letters  עליה unseen      "
+      "content": "אייה Pronouns, exercises  | ריאן  sounds, letters  | עליה Unseen  |  | ",
+      "allText": "20/10/2026 11:22:58 אינסה נוביקוב 11-12 אייה pronouns, exercises  ריאן  sounds, letters  עליה unseen      "
     },
     {
       "timestamp": "20/10/2026 11:50:10",
@@ -1973,8 +1973,8 @@
       "month": "10/2026",
       "teacher": "אילנה שחר",
       "studentName": "11-12",
-      "content": "תאמר ליאל ואלירז לא הגיעו |  |  |  | ",
-      "allText": "20/10/2026 11:52:31 אילנה שחר 11-12 תאמר ליאל ואלירז לא הגיעו       "
+      "content": "ללא תלמידים  |  |  |  | ",
+      "allText": "20/10/2026 11:52:31 אילנה שחר 11-12 ללא תלמידים        "
     },
     {
       "timestamp": "20/10/2026 12:18:07",
@@ -1999,6 +1999,14 @@
       "studentName": "12-13",
       "content": "עליה נושא אישי |  |  |  | ",
       "allText": "20/10/2026 12:52:03 אילנה שחר 12-13 עליה נושא אישי       "
+    },
+    {
+      "timestamp": "20/10/2026 12:53:03",
+      "month": "10/2026",
+      "teacher": "אילנה שחר",
+      "studentName": "13-14",
+      "content": "עליה | שיר | שקד |  | ",
+      "allText": "20/10/2026 12:53:03 אילנה שחר 13-14 עליה שיר שקד     "
     }
   ],
   "studentsMapping": {
