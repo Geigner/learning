@@ -837,8 +837,8 @@
       "month": "09/2026",
       "teacher": "אורי סלע",
       "studentName": "11-12",
-      "content": "אברהם היסטוריה  | עליה היסטוריה  |  |  | ",
-      "allText": "08/09/2026 13:58:23 אורי סלע 11-12 אברהם היסטוריה  עליה היסטוריה       "
+      "content": "אברהם.ב היסטוריה  | עליה היסטוריה  |  |  | ",
+      "allText": "08/09/2026 13:58:23 אורי סלע 11-12 אברהם.ב היסטוריה  עליה היסטוריה       "
     },
     {
       "timestamp": "08/09/2026 13:58:53",
@@ -1085,8 +1085,8 @@
       "month": "09/2026",
       "teacher": "אורי סלע",
       "studentName": "10-11",
-      "content": "אברהם היסטוריה  |  |  |  | ",
-      "allText": "15/09/2026 15:07:02 אורי סלע 10-11 אברהם היסטוריה        "
+      "content": "אברהם.ב היסטוריה  |  |  |  | ",
+      "allText": "15/09/2026 15:07:02 אורי סלע 10-11 אברהם.ב היסטוריה        "
     },
     {
       "timestamp": "15/09/2026 15:07:25",
@@ -1733,8 +1733,8 @@
       "month": "10/2026",
       "teacher": "אינסה נוביקוב",
       "studentName": "11-12",
-      "content": "אברהם  Oral Speech , Vocabulary  | ריאן Letters, Sounds  |  |  | ",
-      "allText": "15/10/2026 11:12:15 אינסה נוביקוב 11-12 אברהם  oral speech , vocabulary  ריאן letters, sounds       "
+      "content": "אברהם.ב Oral Speech , Vocabulary  | ריאן Letters, Sounds  |  |  | ",
+      "allText": "15/10/2026 11:12:15 אינסה נוביקוב 11-12 אברהם.ב oral speech , vocabulary  ריאן letters, sounds       "
     },
     {
       "timestamp": "15/10/2026 11:50:34",
@@ -2215,6 +2215,14 @@
       "studentName": "11-12",
       "content": "ריאן vocabulary, reading short stories  | שקד. Vocabulary, Unseen  |  |  | ",
       "allText": "29/10/2026 11:33:35 אינסה נוביקוב 11-12 ריאן vocabulary, reading short stories  שקד. vocabulary, unseen       "
+    },
+    {
+      "timestamp": "29/10/2026 11:48:54",
+      "month": "10/2026",
+      "teacher": "איציק אלבו",
+      "studentName": "10-11",
+      "content": "לארי המשך הטקסט בהבה ת הנקרא על הפלאפל למדסביר סהחלט מתקדם  |  |  |  | ",
+      "allText": "29/10/2026 11:48:54 איציק אלבו 10-11 לארי המשך הטקסט בהבה ת הנקרא על הפלאפל למדסביר סהחלט מתקדם        "
     }
   ],
   "studentsMapping": {
