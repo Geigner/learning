@@ -104,6 +104,23 @@
       justify-content: center;
     }
 
+    /* עיצוב חדש לבאנר רוחבי כללי (כמו ארוחת בוקר/צהריים) */
+    .lesson-slot-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 10px 16px;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #1e3a8a;
+      font-weight: 700;
+      font-size: 1.05rem;
+      gap: 8px;
+    }
+
     .slot-top-line {
       display: flex;
       justify-content: space-between;
@@ -244,6 +261,11 @@
       padding: 8px 14px;
       height: 100%;
       justify-content: center; 
+    }
+
+    body.kiosk-mode .lesson-slot-banner {
+      height: 100%;
+      font-size: calc(1.1rem + 0.3vw) !important;
     }
     
     body.kiosk-mode .slot-main-info { 
@@ -644,27 +666,58 @@
 
         let hourlyLessonsHtml = "";
         let hasAnyLessonInHour = false;
+        let isGlobalBreakRow = false;
+        let globalBreakText = "";
 
+        // בדיקה האם זו שורה של הפסקה/ארוחה רוחבית (כלומר יש תוכן בתא הראשון או השני של הפעילות מבלי שיוך למורה ספציפי)
+        // לדוגמה, אם יש טקסט ב-row[2] אבל שמו של המורה ב-header ריק או מכיל ארוחה/מפגש חברתי
         for (let j = 2; j < row.length; j++) {
           let cellData = (row[j] || "").trim();
-          let teacherName = teachersHeaderRow[j] || "מורה";
+          let teacherName = (teachersHeaderRow[j] || "").trim();
 
           if (cellData) {
             hasAnyLessonInHour = true;
-            const parts = cellData.split('-');
-            let roomInfo = parts.length > 1 ? parts[0].trim() : "";
-            let contentInfo = parts.length > 1 ? parts.slice(1).join('-').trim() : parts[0].trim();
+            // זיהוי פעילות רוחבית (כמו ארוחת בוקר, מפגש חברתי וכדומה)
+            if (teacherName.includes("ארוחה") || teacherName.includes("מפגש") || teacherName.includes("פעילות") || cellData.includes("בתאבון") || cellData.includes("מפגש")) {
+              isGlobalBreakRow = true;
+              globalBreakText = cellData;
+              break;
+            }
+          }
+        }
 
-            hourlyLessonsHtml += `
-              <div class="lesson-slot-card">
-                <div class="slot-top-line">
-                  <span class="slot-teacher-text">${teacherName}</span>
-                  ${roomInfo ? `<span class="slot-room-text"><i class="fa-solid fa-location-dot me-1" style="font-size:0.7rem;"></i>${roomInfo}</span>` : ''}
-                </div>
-                <div class="slot-main-info" title="${contentInfo}">
-                  ${contentInfo}
-                </div>
-              </div>`;
+        // אם זו שורה רוחבית כללית, נציג באנר רחב
+        if (isGlobalBreakRow || (row[2] && !teachersHeaderRow[2] && !row[3])) {
+          let bannerText = globalBreakText || row[2];
+          hourlyLessonsHtml = `
+            <div class="lesson-slot-banner shadow-sm">
+              <i class="fa-solid fa-utensils me-2"></i>
+              ${bannerText}
+            </div>`;
+          hasAnyLessonInHour = true;
+        } else {
+          // ריצה רגילה על משבצות המורים
+          for (let j = 2; j < row.length; j++) {
+            let cellData = (row[j] || "").trim();
+            let teacherName = teachersHeaderRow[j] || "מורה";
+
+            if (cellData) {
+              hasAnyLessonInHour = true;
+              const parts = cellData.split('-');
+              let roomInfo = parts.length > 1 ? parts[0].trim() : "";
+              let contentInfo = parts.length > 1 ? parts.slice(1).join('-').trim() : parts[0].trim();
+
+              hourlyLessonsHtml += `
+                <div class="lesson-slot-card">
+                  <div class="slot-top-line">
+                    <span class="slot-teacher-text">${teacherName}</span>
+                    ${roomInfo ? `<span class="slot-room-text"><i class="fa-solid fa-location-dot me-1" style="font-size:0.7rem;"></i>${roomInfo}</span>` : ''}
+                  </div>
+                  <div class="slot-main-info" title="${contentInfo}">
+                    ${contentInfo}
+                  </div>
+                </div>`;
+            }
           }
         }
 
