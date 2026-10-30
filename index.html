@@ -61,26 +61,26 @@
       display: flex;
       align-items: stretch;
       gap: 10px;
-      padding: 4px 12px;        
-      margin-bottom: 6px;       
+      padding: 8px 14px;        
+      margin-bottom: 8px;       
       transition: var(--transition);
     }
     
     .time-row-header {
       font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e40af;           
+      font-weight: 600;
+      color: #334155;           
       min-width: 110px;
       max-width: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #e0e7ff;      
+      background: #f1f5f9;      
       border-radius: 6px;
-      padding: 4px;
+      padding: 6px;
       text-align: center;
       flex-shrink: 0;
-      gap: 5px;
+      border: 1px solid #e2e8f0;
     }
 
     .time-lessons-container {
@@ -95,47 +95,85 @@
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 6px;
-      padding: 6px 12px;        
-      min-width: 230px;
-      max-width: 310px;
-      flex-grow: 1;
+      padding: 10px 14px;        
+      flex: 1 1 0px;
+      min-width: 200px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    .lesson-slot-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 12px 16px;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #1e3a8a;
+      font-weight: 700;
+      font-size: 1.1rem;
     }
 
     .slot-top-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2px;
-      font-size: 0.82rem;
+      margin-bottom: 3px;
+      font-size: 0.85rem;
     }
     .slot-teacher-text { color: var(--text-muted); font-weight: 600; }
     .slot-room-text { color: #0284c7; font-weight: 700; background: #e0f2fe; padding: 1px 6px; border-radius: 10px; font-size: 0.78rem; }
 
     .slot-main-info {
       color: var(--text-main);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.25;
       white-space: normal; 
       overflow: visible;
     }
 
     .time-block-row.active-time-row {
       border-color: var(--accent);
-      background: #ccfbf1;       
+      background: #f0fdfa;       
       box-shadow: 0 2px 8px rgba(15, 118, 110, 0.05);
     }
     .time-block-row.active-time-row .time-row-header {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
+      background: #ccfbf1;
+      color: #0f766e;
+      border-color: #99f6e4;
+      font-weight: 700;
     }
     .time-block-row.active-time-row .lesson-slot-card {
       background: #ffffff;
       border-color: rgba(15, 118, 110, 0.2);
+    }
+
+    .badge.filter-badge {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #f1f5f9 !important;
+      color: #334155 !important;
+      border: 1px solid #cbd5e1;
+    }
+    .badge.filter-badge:hover {
+      background-color: #e2e8f0 !important;
+      transform: translateY(-1px);
+    }
+    .badge.filter-badge.active-filter {
+      background-color: var(--primary) !important;
+      color: white !important;
+      border-color: var(--primary);
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+    }
+    .badge.filter-badge.total-badge {
+      background-color: #e0e7ff !important;
+      color: #1e40af !important;
+      border-color: #c7d2fe !important;
     }
 
     .form-control { border: 1px solid #cbd5e1; background-color: #ffffff; padding: 8px 14px; border-radius: 6px; color: var(--text-main); font-weight: 500; }
@@ -144,8 +182,7 @@
     .btn-primary { background-color: var(--primary); border: none; padding: 6px 20px; font-weight: 600; border-radius: 30px; }
     .btn-primary:hover { background-color: #1d4ed8; }
 
-    .badge { font-size: 0.85rem; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; }
-    .bg-custom-teacher { background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #cbd5e1; }
+    .badge { font-size: 0.85rem; padding: 6px 14px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; }
 
     .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); display: flex; justify-content: center; align-items: center; z-index: 9999; }
     
@@ -181,83 +218,66 @@
       background-color: #ffffff !important; 
       padding: 0 !important; 
       margin: 0 !important; 
-      overflow: hidden !important; 
+      overflow-y: auto !important; 
     }
     body.kiosk-mode #topNav, body.kiosk-mode .no-print, body.kiosk-mode .nav-pills, body.kiosk-mode .site-header-area { display: none !important; }
     
     body.kiosk-mode .main-container { 
-      position: fixed !important;   
-      top: 0 !important;
-      left: 0 !important;
-      width: 100vw !important; 
-      height: 100vh !important; 
+      width: 100% !important; 
+      min-height: 100vh !important; 
       margin: 0 !important; 
-      padding: 16px !important; 
+      padding: 20px 24px !important; 
       border-radius: 0 !important; 
       box-shadow: none !important; 
       display: flex; 
       flex-direction: column;
-      z-index: 99999 !important;      
     }
     
     body.kiosk-mode .daily-rows-scroll-area { 
-      flex-grow: 1; 
       display: flex; 
       flex-direction: column; 
-      justify-content: space-between; 
-      overflow: hidden; 
-      gap: 8px;
+      gap: 12px;
     }
     
     body.kiosk-mode .time-block-row { 
-      padding: 8px 16px; 
-      margin-bottom: 0px; 
-      flex-grow: 1; 
-      flex-shrink: 1;
+      padding: 12px 18px; 
+      margin-bottom: 4px; 
       display: flex;
-      align-items: center; 
-      min-height: 0;
+      align-items: stretch; 
     }
     
     body.kiosk-mode .time-row-header { 
-      font-size: 1.35rem; 
-      min-width: 155px; 
-      max-width: 155px; 
+      font-size: 1.2rem; 
+      min-width: 130px; 
+      max-width: 130px; 
       padding: 8px; 
-      height: 85%; 
+      font-weight: 700;
     }
     
     body.kiosk-mode .time-lessons-container { 
       gap: 12px; 
       display: flex; 
-      flex-wrap: nowrap; 
-      overflow: hidden;
-      height: 85%;
-      align-items: center; 
+      flex-wrap: wrap; 
+      align-items: stretch; 
     }
     
     body.kiosk-mode .lesson-slot-card { 
-      min-width: 20%; 
-      max-width: 32% !important; 
-      flex-shrink: 1; 
-      flex-grow: 1; 
-      padding: 8px 14px;
-      height: 100%;
+      flex: 1 1 240px !important;
+      padding: 12px 16px;
       justify-content: center; 
+    }
+
+    body.kiosk-mode .lesson-slot-banner {
+      padding: 14px 20px;
+      font-size: 1.2rem !important;
     }
     
     body.kiosk-mode .slot-main-info { 
-      font-size: calc(1.05rem + 0.2vw) !important; 
-      white-space: normal !important;      
-      overflow: visible !important;        
-      text-overflow: clip !important;        
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2 !important;     
-      -webkit-box-orient: vertical !important;
-      line-height: 1.2 !important;
+      font-size: 1.15rem !important; 
+      line-height: 1.3 !important;
     }
     
-    body.kiosk-mode .slot-top-line { font-size: 0.95rem; margin-bottom: 2px; }
+    body.kiosk-mode .slot-top-line { font-size: 0.95rem; margin-bottom: 4px; }
 
     body.teacher-view-mode #topNav, body.teacher-view-mode .site-header-area { display: none !important; }
     body.teacher-view-mode .main-container { margin-top: 10px !important; padding-top: 10px !important; }
@@ -322,7 +342,8 @@
   <div class="tab-content">
     <div class="tab-pane fade show active" id="tab-personal">
       <div id="adminSearchArea" class="mb-3 no-print">
-        <input type="text" id="pSearch" class="form-control rounded-pill py-2 px-4 shadow-sm" placeholder="חפש תלמיד לקבלת מערכת שעות אישית והיסטוריה..." oninput="searchPersonal()">
+        <input type="text" id="pSearch" list="studentsListOptions" class="form-control rounded-pill py-2 px-4 shadow-sm w-100" placeholder="חפש תלמיד או לחץ לבחירה מהרשימה..." oninput="searchPersonal()">
+        <datalist id="studentsListOptions"></datalist>
       </div>
       
       <div id="shareArea" class="no-print text-center mb-3" style="display: none;">
@@ -342,11 +363,18 @@
       
       <div id="adminReportsArea" style="display:none;" class="no-print border-top pt-3">
         <h6 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-clock-rotate-left me-1"></i>תיק דיווחים אישי קודם:</h6>
+        
         <div class="row g-2 mb-2 bg-light p-2 rounded-3">
-          <div class="col-6"><select id="pMonth" class="form-select border-0 shadow-sm" onchange="filterPersonalReports()"><option value="ALL">כל החודשים</option></select></div>
-          <div class="col-6"><select id="pTeacher" class="form-select border-0 shadow-sm" onchange="filterPersonalReports()"><option value="ALL">כל המורים</option></select></div>
+          <div class="col-md-4">
+            <select id="pMonth" class="form-select border-0 shadow-sm" onchange="filterPersonalReports()">
+              <option value="ALL">כל החודשים</option>
+            </select>
+          </div>
         </div>
-        <div id="pSummary" class="d-flex flex-wrap gap-2 mb-2 align-items-center"></div>
+
+        <input type="hidden" id="pTeacher" value="ALL">
+        
+        <div id="pSummary" class="d-flex flex-wrap gap-2 mb-3 align-items-center"></div>
         <div id="pReportsList" class="overflow-auto border rounded-3 bg-white" style="max-height: 350px;"></div>
       </div>
     </div>
@@ -363,11 +391,19 @@
 
     <div class="tab-pane fade" id="tab-archive">
       <div class="row g-2 mb-3 bg-light p-2 rounded-3 no-print">
-        <div class="col-md-4"><select id="fMonth" class="form-select border-0 shadow-sm" onchange="applyFilters()"><option value="ALL">כל החודשים</option></select></div>
-        <div class="col-md-4"><select id="fTeacher" class="form-select border-0 shadow-sm" onchange="applyFilters()"><option value="ALL">כל המורים</option></select></div>
-        <div class="col-md-4"><input type="text" id="fSearch" class="form-control border-0 shadow-sm" placeholder="חיפוש חופשי בתוכן הדיווח..." onkeyup="applyFilters()"></div>
+        <div class="col-md-8">
+          <input type="text" id="fSearch" class="form-control border-0 shadow-sm" placeholder="חיפוש חופשי בתוכן הדיווח..." onkeyup="applyFilters()">
+        </div>
+        <div class="col-md-4">
+          <select id="fMonth" class="form-select border-0 shadow-sm" onchange="applyFilters()">
+            <option value="ALL">כל החודשים</option>
+          </select>
+        </div>
       </div>
-      <div id="fSummary" class="d-flex flex-wrap gap-2 mb-2 no-print align-items-center"></div>
+
+      <input type="hidden" id="fTeacher" value="ALL">
+
+      <div id="fSummary" class="d-flex flex-wrap gap-2 mb-3 no-print align-items-center"></div>
       <div id="archiveContent" class="overflow-auto border rounded-3 bg-white" style="max-height: 450px;"></div>
     </div>
   </div>
@@ -382,6 +418,12 @@
   let isStaffUrlMode = false;
   let identifiedStudent = "";
   let currentActiveDayGlobal = "ראשון";
+
+  function getTodayNameHebrew() {
+    const dayIndex = new Date().getDay();
+    const daysMap = { 0: "ראשון", 1: "שני", 2: "שלישי", 3: "רביעי", 4: "חמישי" };
+    return daysMap[dayIndex] || "ראשון";
+  }
 
   window.onload = async () => {
     try {
@@ -399,7 +441,17 @@
       const validDays = ["ראשון", "שני", "שלישי", "רביעי", "חמישי"];
       if (urlDay && validDays.includes(urlDay)) {
         currentActiveDayGlobal = urlDay;
+      } else {
+        currentActiveDayGlobal = getTodayNameHebrew();
       }
+
+      // האזנה למקש ESC ליציאה ממצב קיוסק
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('kiosk-mode')) {
+          document.body.classList.remove('kiosk-mode');
+          drawDaily(currentActiveDayGlobal);
+        }
+      });
 
       if (urlPw === GLOBAL_DB.studentPw && urlView === "staff") {
         isStudentMode = false;
@@ -459,19 +511,22 @@
 
   function startApp() {
     document.getElementById('appScreen').style.display = 'block';
+    
+    if (GLOBAL_DB.studentsMapping) {
+      const datalist = document.getElementById('studentsListOptions');
+      const uniqueStudents = [...new Set(Object.values(GLOBAL_DB.studentsMapping))].sort();
+      uniqueStudents.forEach(stuName => {
+        datalist.innerHTML += `<option value="${stuName}"></option>`;
+      });
+    }
+
     if (GLOBAL_DB.availableMonths) {
       ['fMonth', 'pMonth'].forEach(id => {
         const el = document.getElementById(id);
         GLOBAL_DB.availableMonths.forEach(m => el.innerHTML += `<option value="${m}">${m}</option>`);
       });
     }
-    if (GLOBAL_DB.availableTeachers) {
-      ['fTeacher', 'pTeacher'].forEach(id => {
-        const el = document.getElementById(id);
-        GLOBAL_DB.availableTeachers.forEach(t => el.innerHTML += `<option value="${t}">${t}</option>`);
-      });
-    }
-    
+
     if (isTeacherMode) {
       const dailyTriggerBtn = document.querySelector('[data-bs-target="#tab-daily"]');
       if (dailyTriggerBtn) {
@@ -502,7 +557,14 @@
   function searchPersonal(studentMode = false) {
     const q = document.getElementById('pSearch').value.trim().toLowerCase();
     const grid = document.getElementById('pGrid');
-    if (q.length < 2) { grid.innerHTML = ""; return; }
+    if (q.length < 2) { 
+      grid.innerHTML = ""; 
+      if (!studentMode) {
+        document.getElementById('adminReportsArea').style.display = 'none';
+        document.getElementById('shareArea').style.display = 'none';
+      }
+      return; 
+    }
     
     let html = '';
     ["ראשון", "שני", "שלישי", "רביעי", "חמישי"].forEach(day => {
@@ -599,7 +661,7 @@
           </div>
           <div class="d-flex align-items-center justify-content-center gap-3">
             <h5 class="fw-bold m-0 text-dark">לוח זמנים מפורט - יום ${activeDay}</h5>
-            <div class="live-clock-badge"><i class="fa-regular fa-clock"></i><span id="kioskLiveClock">--:--:--</span></div>
+            <div class="live-clock-badge"><span id="kioskLiveClock">--:--:--</span></div>
           </div>
           <div style="flex: 1;"></div>
         </div>`;
@@ -644,27 +706,52 @@
 
         let hourlyLessonsHtml = "";
         let hasAnyLessonInHour = false;
+        let isGlobalBreakRow = false;
+        let globalBreakText = "";
 
         for (let j = 2; j < row.length; j++) {
           let cellData = (row[j] || "").trim();
-          let teacherName = teachersHeaderRow[j] || "מורה";
+          let teacherName = (teachersHeaderRow[j] || "").trim();
 
           if (cellData) {
             hasAnyLessonInHour = true;
-            const parts = cellData.split('-');
-            let roomInfo = parts.length > 1 ? parts[0].trim() : "";
-            let contentInfo = parts.length > 1 ? parts.slice(1).join('-').trim() : parts[0].trim();
+            if (teacherName.includes("ארוחה") || teacherName.includes("מפגש") || teacherName.includes("פעילות") || cellData.includes("בתאבון") || cellData.includes("מפגש")) {
+              isGlobalBreakRow = true;
+              globalBreakText = cellData;
+              break;
+            }
+          }
+        }
 
-            hourlyLessonsHtml += `
-              <div class="lesson-slot-card">
-                <div class="slot-top-line">
-                  <span class="slot-teacher-text">${teacherName}</span>
-                  ${roomInfo ? `<span class="slot-room-text"><i class="fa-solid fa-location-dot me-1" style="font-size:0.7rem;"></i>${roomInfo}</span>` : ''}
-                </div>
-                <div class="slot-main-info" title="${contentInfo}">
-                  ${contentInfo}
-                </div>
-              </div>`;
+        if (isGlobalBreakRow || (row[2] && !teachersHeaderRow[2] && !row[3])) {
+          let bannerText = globalBreakText || row[2];
+          hourlyLessonsHtml = `
+            <div class="lesson-slot-banner shadow-sm">
+              ${bannerText}
+            </div>`;
+          hasAnyLessonInHour = true;
+        } else {
+          for (let j = 2; j < row.length; j++) {
+            let cellData = (row[j] || "").trim();
+            let teacherName = teachersHeaderRow[j] || "מורה";
+
+            if (cellData) {
+              hasAnyLessonInHour = true;
+              const parts = cellData.split('-');
+              let roomInfo = parts.length > 1 ? parts[0].trim() : "";
+              let contentInfo = parts.length > 1 ? parts.slice(1).join('-').trim() : parts[0].trim();
+
+              hourlyLessonsHtml += `
+                <div class="lesson-slot-card">
+                  <div class="slot-top-line">
+                    <span class="slot-teacher-text">${teacherName}</span>
+                    ${roomInfo ? `<span class="slot-room-text"><i class="fa-solid fa-location-dot me-1" style="font-size:0.7rem;"></i>${roomInfo}</span>` : ''}
+                  </div>
+                  <div class="slot-main-info" title="${contentInfo}">
+                    ${contentInfo}
+                  </div>
+                </div>`;
+            }
           }
         }
 
@@ -672,7 +759,6 @@
           contentHtml += `
             <div class="time-block-row shadow-sm ${isTimeRowActive ? 'active-time-row' : ''}">
               <div class="time-row-header">
-                <i class="fa-regular fa-clock d-none d-sm-inline"></i>
                 ${timeRangeString}
               </div>
               <div class="time-lessons-container">
@@ -703,9 +789,9 @@
     
     if (!GLOBAL_DB.reports) return;
 
-    const filtered = GLOBAL_DB.reports.filter(r => {
-      const studentMatch = r.studentName.toLowerCase().includes(q) || r.content.toLowerCase().includes(q);
-      if (!studentMatch) return false;
+    const studentReports = GLOBAL_DB.reports.filter(r => r.studentName.toLowerCase().includes(q) || r.content.toLowerCase().includes(q));
+
+    const filtered = studentReports.filter(r => {
       if (selMonth !== "ALL" && r.month !== selMonth) return false;
       if (selTeacher !== "ALL" && r.teacher !== selTeacher) return false;
       return true;
@@ -721,16 +807,38 @@
     if(filtered.length === 0) html = '<div class="text-center text-muted py-4">אין דיווחים קודמים העונים לדרישות הסינון.</div>';
     listEl.innerHTML = html;
 
+    let summaryHtml = '';
+    const isAllActive = (selTeacher === "ALL") ? 'active-filter' : '';
+    summaryHtml += `<span class="badge filter-badge total-badge shadow-sm ${isAllActive}" onclick="resetPersonalTeacherFilter()">סה"כ דיווחים: ${studentReports.filter(r => selMonth === "ALL" || r.month === selMonth).length}</span>`;
+
     let teacherCounts = {};
-    filtered.forEach(r => {
-      teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+    studentReports.forEach(r => {
+      if (selMonth === "ALL" || r.month === selMonth) {
+        teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+      }
     });
 
-    let summaryHtml = `<span class="badge bg-primary shadow-sm">סה"כ דיווחים: ${filtered.length}</span>`;
     for (let teacher in teacherCounts) {
-      summaryHtml += ` <span class="badge bg-custom-teacher text-dark shadow-sm">${teacher}: ${teacherCounts[teacher]}</span>`;
+      const isTeacherActive = (selTeacher === teacher) ? 'active-filter' : '';
+      summaryHtml += ` <span class="badge filter-badge shadow-sm ${isTeacherActive}" onclick="filterPersonalByTeacherBadge('${teacher}')">${teacher}: ${teacherCounts[teacher]}</span>`;
     }
+
     summaryEl.innerHTML = summaryHtml;
+  }
+
+  function resetPersonalTeacherFilter() {
+    document.getElementById('pTeacher').value = "ALL";
+    filterPersonalReports();
+  }
+
+  function filterPersonalByTeacherBadge(teacherName) {
+    const teacherInput = document.getElementById('pTeacher');
+    if (teacherInput.value === teacherName) {
+      teacherInput.value = "ALL";
+    } else {
+      teacherInput.value = teacherName;
+    }
+    filterPersonalReports();
   }
 
   function applyFilters() {
@@ -742,10 +850,14 @@
 
     if (!GLOBAL_DB.reports) return;
 
-    const filtered = GLOBAL_DB.reports.filter(r => {
+    const searchedReports = GLOBAL_DB.reports.filter(r => {
+      if (s && !r.allText.includes(s) && !r.content.toLowerCase().includes(s) && !r.studentName.toLowerCase().includes(s)) return false;
+      return true;
+    });
+
+    const filtered = searchedReports.filter(r => {
       if (m !== "ALL" && r.month !== m) return false;
       if (t !== "ALL" && r.teacher !== t) return false;
-      if (s && !r.allText.includes(s) && !r.content.toLowerCase().includes(s) && !r.studentName.toLowerCase().includes(s)) return false;
       return true;
     });
 
@@ -759,16 +871,39 @@
     if(filtered.length === 0) html = '<div class="text-center text-muted py-4">אין דיווחים בארכיון העונים לדרישות הסינון.</div>';
     listEl.innerHTML = html;
 
+    let summaryHtml = '';
+    const baseCount = searchedReports.filter(r => m === "ALL" || r.month === m).length;
+    const isArchiveAllActive = (t === "ALL") ? 'active-filter' : '';
+    summaryHtml += `<span class="badge filter-badge total-badge shadow-sm ${isArchiveAllActive}" onclick="resetArchiveTeacherFilter()">נמצאו ${baseCount} דיווחים</span>`;
+
     let teacherCounts = {};
-    filtered.forEach(r => {
-      teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+    searchedReports.forEach(r => {
+      if (m === "ALL" || r.month === m) {
+        teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+      }
     });
 
-    let summaryHtml = `<span class="badge bg-primary shadow-sm">נמצאו ${filtered.length} דיווחים בארכיון</span>`;
     for (let teacher in teacherCounts) {
-      summaryHtml += ` <span class="badge bg-custom-teacher text-dark shadow-sm">${teacher}: ${teacherCounts[teacher]}</span>`;
+      const isActive = (t === teacher) ? 'active-filter' : '';
+      summaryHtml += ` <span class="badge filter-badge shadow-sm ${isActive}" onclick="filterByTeacherBadge('${teacher}')">${teacher}: ${teacherCounts[teacher]}</span>`;
     }
+
     summaryEl.innerHTML = summaryHtml;
+  }
+
+  function resetArchiveTeacherFilter() {
+    document.getElementById('fTeacher').value = "ALL";
+    applyFilters();
+  }
+
+  function filterByTeacherBadge(teacherName) {
+    const teacherInput = document.getElementById('fTeacher');
+    if (teacherInput.value === teacherName) {
+      teacherInput.value = "ALL";
+    } else {
+      teacherInput.value = teacherName;
+    }
+    applyFilters();
   }
 </script>
 </body>
