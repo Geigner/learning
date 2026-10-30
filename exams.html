@@ -28,10 +28,11 @@
       margin-bottom: 15px;
       margin-top: 15px;
       width: 100%;
+      flex-wrap: wrap;
     }
     
     .search-wrapper {
-      max-width: 400px;
+      max-width: 350px;
       flex-grow: 1;
     }
 
@@ -44,7 +45,6 @@
       align-items: center;
       justify-content: space-between;
       white-space: nowrap; 
-      min-width: 150px !important; 
     }
 
     #examList {
@@ -86,11 +86,23 @@
     <div class="search-wrapper">
       <input type="text" id="searchInput" oninput="applyFilters()" class="form-control search-pill" placeholder="חיפוש לפי נושא או שם נער...">
     </div>
+    
+    <!-- פילטר רשומים בלבד -->
     <div>
       <div class="filter-box shadow-sm">
         <div class="d-flex align-items-center w-100" style="direction: ltr !important;">
           <input class="form-check-input m-0" type="checkbox" id="regOnly" onchange="applyFilters()" style="cursor: pointer;">
           <span class="small fw-bold text-primary mb-0" style="margin-left: 10px; direction: rtl; cursor: pointer;" onclick="document.getElementById('regOnly').click()">רשומים בלבד</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- פילטר הסתרת אירועים שעברו -->
+    <div>
+      <div class="filter-box shadow-sm" style="background: #f8fafc;">
+        <div class="d-flex align-items-center w-100" style="direction: ltr !important;">
+          <input class="form-check-input m-0" type="checkbox" id="hidePast" checked onchange="applyFilters()" style="cursor: pointer;">
+          <span class="small fw-bold text-secondary mb-0" style="margin-left: 10px; direction: rtl; cursor: pointer;" onclick="document.getElementById('hidePast').click()">הסתר עבר</span>
         </div>
       </div>
     </div>
@@ -132,6 +144,7 @@
       })
       .then(data => {
         if (Array.isArray(data)) {
+          // מיון כך שהאירועים הקרובים והעתידיים יופיעו ראשונים
           allExams = data.sort((a,b) => parseDateHe(a.date) - parseDateHe(b.date));
           draw();
         } else if (data.error) {
@@ -169,9 +182,9 @@
       col.className = "col card-wrapper";
       if(diff < 0) col.classList.add('past-event');
       
-      // חיפוש כולל: תיאור, תלמידים, סוג, יום, תאריך והערות
       col.setAttribute('data-search', `${desc} ${students} ${type} ${day} ${rawDate} ${notes}`.toLowerCase());
       col.setAttribute('data-reg', students.trim() !== "" ? "y" : "n");
+      col.setAttribute('data-diff', diff); // נשמור את הפרש הימים לסינון עבר/עתיד
 
       col.innerHTML = `
         <div class="card exam-card shadow-sm type-${type} ${diff===0?'today-event':''}">
@@ -195,20 +208,23 @@
   function applyFilters() {
     const term = document.getElementById('searchInput').value.toLowerCase().trim();
     const onlyReg = document.getElementById('regOnly').checked;
+    const hidePast = document.getElementById('hidePast').checked;
     let count = 0;
     
     document.querySelectorAll('.card-wrapper').forEach(c => {
       const sMatch = c.getAttribute('data-search').includes(term);
       const rMatch = !onlyReg || c.getAttribute('data-reg') === "y";
+      const diff = parseInt(c.getAttribute('data-diff'), 10);
+      const pMatch = !hidePast || diff >= 0; // אם מסומן להסתיר עבר, מציג רק אם diff >= 0
       
-      if(sMatch && rMatch) { 
+      if(sMatch && rMatch && pMatch) { 
         c.style.display = "block"; 
         count++; 
       } else { 
         c.style.display = "none"; 
       }
     });
-    document.getElementById('statusCount').innerText = `מציג ${count} אירועים`;
+    document.getElementById('statusCount').innerText = `מציג ${count} אירועים רלוונטיים`;
   }
 </script>
 </body>
