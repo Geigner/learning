@@ -104,7 +104,7 @@
       justify-content: center;
     }
 
-    /* עיצוב חדש לבאנר רוחבי כללי (כמו ארוחת בוקר/צהריים) */
+    /* עיצוב לבאנר רוחבי כללי (ארוחת בוקר/צהריים) */
     .lesson-slot-banner {
       background: #eff6ff;
       border: 1px solid #bfdbfe;
@@ -155,14 +155,27 @@
       border-color: rgba(15, 118, 110, 0.2);
     }
 
+    /* עיצוב בועות סינון מורים בארכיון הדיווחים */
+    .badge.bg-custom-teacher {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .badge.bg-custom-teacher:hover {
+      background-color: #cbd5e1 !important;
+      transform: translateY(-1px);
+    }
+    .badge.bg-custom-teacher.active-filter {
+      background-color: var(--primary) !important;
+      color: white !important;
+    }
+
     .form-control { border: 1px solid #cbd5e1; background-color: #ffffff; padding: 8px 14px; border-radius: 6px; color: var(--text-main); font-weight: 500; }
     .form-select { border: 1px solid #cbd5e1; background-color: #ffffff; padding: 8px 32px 8px 14px; border-radius: 6px; color: var(--text-main); font-weight: 500; background-position: left 0.75rem center; }
     
     .btn-primary { background-color: var(--primary); border: none; padding: 6px 20px; font-weight: 600; border-radius: 30px; }
     .btn-primary:hover { background-color: #1d4ed8; }
 
-    .badge { font-size: 0.85rem; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; }
-    .bg-custom-teacher { background-color: #f1f5f9 !important; color: #334155 !important; border: 1px solid #cbd5e1; }
+    .badge { font-size: 0.85rem; padding: 6px 14px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; }
 
     .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); display: flex; justify-content: center; align-items: center; z-index: 9999; }
     
@@ -669,15 +682,12 @@
         let isGlobalBreakRow = false;
         let globalBreakText = "";
 
-        // בדיקה האם זו שורה של הפסקה/ארוחה רוחבית (כלומר יש תוכן בתא הראשון או השני של הפעילות מבלי שיוך למורה ספציפי)
-        // לדוגמה, אם יש טקסט ב-row[2] אבל שמו של המורה ב-header ריק או מכיל ארוחה/מפגש חברתי
         for (let j = 2; j < row.length; j++) {
           let cellData = (row[j] || "").trim();
           let teacherName = (teachersHeaderRow[j] || "").trim();
 
           if (cellData) {
             hasAnyLessonInHour = true;
-            // זיהוי פעילות רוחבית (כמו ארוחת בוקר, מפגש חברתי וכדומה)
             if (teacherName.includes("ארוחה") || teacherName.includes("מפגש") || teacherName.includes("פעילות") || cellData.includes("בתאבון") || cellData.includes("מפגש")) {
               isGlobalBreakRow = true;
               globalBreakText = cellData;
@@ -686,7 +696,6 @@
           }
         }
 
-        // אם זו שורה רוחבית כללית, נציג באנר רחב
         if (isGlobalBreakRow || (row[2] && !teachersHeaderRow[2] && !row[3])) {
           let bannerText = globalBreakText || row[2];
           hourlyLessonsHtml = `
@@ -696,7 +705,6 @@
             </div>`;
           hasAnyLessonInHour = true;
         } else {
-          // ריצה רגילה על משבצות המורים
           for (let j = 2; j < row.length; j++) {
             let cellData = (row[j] || "").trim();
             let teacherName = teachersHeaderRow[j] || "מורה";
@@ -819,9 +827,20 @@
 
     let summaryHtml = `<span class="badge bg-primary shadow-sm">נמצאו ${filtered.length} דיווחים בארכיון</span>`;
     for (let teacher in teacherCounts) {
-      summaryHtml += ` <span class="badge bg-custom-teacher text-dark shadow-sm">${teacher}: ${teacherCounts[teacher]}</span>`;
+      const isActive = (t === teacher) ? 'active-filter' : '';
+      summaryHtml += ` <span class="badge bg-custom-teacher text-dark shadow-sm ${isActive}" onclick="filterByTeacherBadge('${teacher}')">${teacher}: ${teacherCounts[teacher]}</span>`;
     }
     summaryEl.innerHTML = summaryHtml;
+  }
+
+  function filterByTeacherBadge(teacherName) {
+    const teacherSelect = document.getElementById('fTeacher');
+    if (teacherSelect.value === teacherName) {
+      teacherSelect.value = "ALL";
+    } else {
+      teacherSelect.value = teacherName;
+    }
+    applyFilters();
   }
 </script>
 </body>
