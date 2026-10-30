@@ -104,7 +104,6 @@
       justify-content: center;
     }
 
-    /* באנר רוחבי כללי ללא אייקון סכו"ם */
     .lesson-slot-banner {
       background: #eff6ff;
       border: 1px solid #bfdbfe;
@@ -154,6 +153,7 @@
       border-color: rgba(15, 118, 110, 0.2);
     }
 
+    /* עיצוב בועות סינון מורים בלחיצה */
     .badge.bg-custom-teacher {
       cursor: pointer;
       transition: all 0.2s ease;
@@ -354,16 +354,10 @@
 
   <div class="tab-content">
     <div class="tab-pane fade show active" id="tab-personal">
-      <!-- אזור חיפוש ובחירת תלמיד הכולל גם חיפוש חופשי וגם רשימה נפתחת -->
-      <div id="adminSearchArea" class="row g-2 mb-3 no-print">
-        <div class="col-md-8">
-          <input type="text" id="pSearch" class="form-control rounded-pill py-2 px-4 shadow-sm w-100" placeholder="חפש תלמיד לפי שם או הקלד חופשי..." oninput="onStudentInputChanged()">
-        </div>
-        <div class="col-md-4">
-          <select id="pSelectDropdown" class="form-select rounded-pill py-2 px-3 shadow-sm w-100" onchange="onStudentDropdownChanged(this.value)">
-            <option value="">-- או בחר תלמיד מהרשימה --</option>
-          </select>
-        </div>
+      <!-- שדה חיפוש משולב יחיד: מאפשר גם הקלדה חופשית וגם בחירה מתוך רשימה נפתחת -->
+      <div id="adminSearchArea" class="mb-3 no-print">
+        <input type="text" id="pSearch" list="studentsListOptions" class="form-control rounded-pill py-2 px-4 shadow-sm w-100" placeholder="חפש תלמיד או לחץ לבחירה מהרשימה..." oninput="searchPersonal()">
+        <datalist id="studentsListOptions"></datalist>
       </div>
       
       <div id="shareArea" class="no-print text-center mb-3" style="display: none;">
@@ -501,13 +495,12 @@
   function startApp() {
     document.getElementById('appScreen').style.display = 'block';
     
-    // מילוי רשימת התלמידים הנפתחת (Dropdown) מתוך studentsMapping
+    // אכלוס רשימת ההצעות המשולבת (Datalist) למבט התלמיד האישי
     if (GLOBAL_DB.studentsMapping) {
-      const dropdown = document.getElementById('pSelectDropdown');
-      // איסוף ושיום ייחודי וממוין של כל שמות התלמידים
+      const datalist = document.getElementById('studentsListOptions');
       const uniqueStudents = [...new Set(Object.values(GLOBAL_DB.studentsMapping))].sort();
       uniqueStudents.forEach(stuName => {
-        dropdown.innerHTML += `<option value="${stuName}">${stuName}</option>`;
+        datalist.innerHTML += `<option value="${stuName}"></option>`;
       });
     }
 
@@ -549,22 +542,6 @@
       if(document.getElementById('adminReportsArea')) document.getElementById('adminReportsArea').remove();
       searchPersonal(true); 
     }
-  }
-
-  // טיפול בעדכון תיבת ההקלדה החופשית
-  function onStudentInputChanged() {
-    // איפוס ה-Dropdown כאשר מקלידים ידנית
-    const dropdown = document.getElementById('pSelectDropdown');
-    dropdown.value = "";
-    searchPersonal();
-  }
-
-  // טיפול בבחירת תלמיד מתוך הרשימה הנפתחת
-  function onStudentDropdownChanged(selectedName) {
-    if (!selectedName) return;
-    const pInput = document.getElementById('pSearch');
-    pInput.value = selectedName;
-    searchPersonal();
   }
 
   function searchPersonal(studentMode = false) {
@@ -736,7 +713,6 @@
           }
         }
 
-        // באנר כללי ללא סכו"ם
         if (isGlobalBreakRow || (row[2] && !teachersHeaderRow[2] && !row[3])) {
           let bannerText = globalBreakText || row[2];
           hourlyLessonsHtml = `
@@ -827,11 +803,24 @@
       teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
     });
 
+    // הפיכת הבועות בתיק הדיווחים האישי ללחיצות ומסננות
     let summaryHtml = `<span class="badge bg-primary shadow-sm">סה"כ דיווחים: ${filtered.length}</span>`;
     for (let teacher in teacherCounts) {
-      summaryHtml += ` <span class="badge bg-custom-teacher text-dark shadow-sm">${teacher}: ${teacherCounts[teacher]}</span>`;
+      const isActive = (selTeacher === teacher) ? 'active-filter' : '';
+      summaryHtml += ` <span class="badge bg-custom-teacher text-dark shadow-sm ${isActive}" onclick="filterPersonalByTeacherBadge('${teacher}')">${teacher}: ${teacherCounts[teacher]}</span>`;
     }
     summaryEl.innerHTML = summaryHtml;
+  }
+
+  // סינון דיווחים בתיק האישי לפי לחיצה על בועת מורה
+  function filterPersonalByTeacherBadge(teacherName) {
+    const teacherSelect = document.getElementById('pTeacher');
+    if (teacherSelect.value === teacherName) {
+      teacherSelect.value = "ALL";
+    } else {
+      teacherSelect.value = teacherName;
+    }
+    filterPersonalReports();
   }
 
   function applyFilters() {
