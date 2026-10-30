@@ -66,21 +66,22 @@
       transition: var(--transition);
     }
     
+    /* עיצוב מינימליסטי נקי יותר לכותרת השעה בלוח היומי */
     .time-row-header {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #1e40af;           
-      min-width: 110px;
-      max-width: 110px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #334155;           
+      min-width: 100px;
+      max-width: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #e0e7ff;      
+      background: #f1f5f9;      
       border-radius: 6px;
       padding: 4px;
       text-align: center;
       flex-shrink: 0;
-      gap: 5px;
+      border: 1px solid #e2e8f0;
     }
 
     .time-lessons-container {
@@ -140,31 +141,37 @@
 
     .time-block-row.active-time-row {
       border-color: var(--accent);
-      background: #ccfbf1;       
+      background: #f0fdfa;       
       box-shadow: 0 2px 8px rgba(15, 118, 110, 0.05);
     }
     .time-block-row.active-time-row .time-row-header {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: var(--accent);
+      background: #ccfbf1;
+      color: #0f766e;
+      border-color: #99f6e4;
+      font-weight: 700;
     }
     .time-block-row.active-time-row .lesson-slot-card {
       background: #ffffff;
       border-color: rgba(15, 118, 110, 0.2);
     }
 
-    /* עיצוב בועות סינון מורים בלחיצה */
+    /* בועות מורים לחיצות ששומרות על כל שאר הבועות גלויות */
     .badge.bg-custom-teacher {
       cursor: pointer;
       transition: all 0.2s ease;
+      background-color: #f1f5f9 !important;
+      color: #334155 !important;
+      border: 1px solid #cbd5e1;
     }
     .badge.bg-custom-teacher:hover {
-      background-color: #cbd5e1 !important;
+      background-color: #e2e8f0 !important;
       transform: translateY(-1px);
     }
     .badge.bg-custom-teacher.active-filter {
       background-color: var(--primary) !important;
       color: white !important;
+      border-color: var(--primary);
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
     }
 
     .form-control { border: 1px solid #cbd5e1; background-color: #ffffff; padding: 8px 14px; border-radius: 6px; color: var(--text-main); font-weight: 500; }
@@ -248,9 +255,9 @@
     }
     
     body.kiosk-mode .time-row-header { 
-      font-size: 1.35rem; 
-      min-width: 155px; 
-      max-width: 155px; 
+      font-size: 1.25rem; 
+      min-width: 140px; 
+      max-width: 140px; 
       padding: 8px; 
       height: 85%; 
     }
@@ -354,7 +361,6 @@
 
   <div class="tab-content">
     <div class="tab-pane fade show active" id="tab-personal">
-      <!-- שדה חיפוש משולב יחיד: מאפשר גם הקלדה חופשית וגם בחירה מתוך רשימה נפתחת -->
       <div id="adminSearchArea" class="mb-3 no-print">
         <input type="text" id="pSearch" list="studentsListOptions" class="form-control rounded-pill py-2 px-4 shadow-sm w-100" placeholder="חפש תלמיד או לחץ לבחירה מהרשימה..." oninput="searchPersonal()">
         <datalist id="studentsListOptions"></datalist>
@@ -495,7 +501,6 @@
   function startApp() {
     document.getElementById('appScreen').style.display = 'block';
     
-    // אכלוס רשימת ההצעות המשולבת (Datalist) למבט התלמיד האישי
     if (GLOBAL_DB.studentsMapping) {
       const datalist = document.getElementById('studentsListOptions');
       const uniqueStudents = [...new Set(Object.values(GLOBAL_DB.studentsMapping))].sort();
@@ -651,7 +656,7 @@
           </div>
           <div class="d-flex align-items-center justify-content-center gap-3">
             <h5 class="fw-bold m-0 text-dark">לוח זמנים מפורט - יום ${activeDay}</h5>
-            <div class="live-clock-badge"><i class="fa-regular fa-clock"></i><span id="kioskLiveClock">--:--:--</span></div>
+            <div class="live-clock-badge"><span id="kioskLiveClock">--:--:--</span></div>
           </div>
           <div style="flex: 1;"></div>
         </div>`;
@@ -749,7 +754,6 @@
           contentHtml += `
             <div class="time-block-row shadow-sm ${isTimeRowActive ? 'active-time-row' : ''}">
               <div class="time-row-header">
-                <i class="fa-regular fa-clock d-none d-sm-inline"></i>
                 ${timeRangeString}
               </div>
               <div class="time-lessons-container">
@@ -799,11 +803,13 @@
     listEl.innerHTML = html;
 
     let teacherCounts = {};
-    filtered.forEach(r => {
+    // סופרים את כל המורים מהדיווחים של התלמיד הנוכחי בלבד (או הכלולים בחיפוש)
+    const studentFilteredReports = GLOBAL_DB.reports.filter(r => r.studentName.toLowerCase().includes(q) || r.content.toLowerCase().includes(q));
+    studentFilteredReports.forEach(r => {
       teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
     });
 
-    // הפיכת הבועות בתיק הדיווחים האישי ללחיצות ומסננות
+    // הצגת כל בועות המורים ללא הסתרה, כאשר הבועה שנבחרה מודגשת
     let summaryHtml = `<span class="badge bg-primary shadow-sm">סה"כ דיווחים: ${filtered.length}</span>`;
     for (let teacher in teacherCounts) {
       const isActive = (selTeacher === teacher) ? 'active-filter' : '';
@@ -812,7 +818,6 @@
     summaryEl.innerHTML = summaryHtml;
   }
 
-  // סינון דיווחים בתיק האישי לפי לחיצה על בועת מורה
   function filterPersonalByTeacherBadge(teacherName) {
     const teacherSelect = document.getElementById('pTeacher');
     if (teacherSelect.value === teacherName) {
@@ -850,7 +855,13 @@
     listEl.innerHTML = html;
 
     let teacherCounts = {};
-    filtered.forEach(r => {
+    // ספירת כל המורים לפי סינון החודש והטקסט בלבד (כדי שכל הבועות תמיד יישארו גלויות)
+    const baseFilteredForTeachers = GLOBAL_DB.reports.filter(r => {
+      if (m !== "ALL" && r.month !== m) return false;
+      if (s && !r.allText.includes(s) && !r.content.toLowerCase().includes(s) && !r.studentName.toLowerCase().includes(s)) return false;
+      return true;
+    });
+    baseFilteredForTeachers.forEach(r => {
       teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
     });
 
