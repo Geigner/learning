@@ -419,17 +419,10 @@
   let identifiedStudent = "";
   let currentActiveDayGlobal = "ראשון";
 
-  // פונקציה לזיהוי היום הנוכחי בשבוע (ראשון-חמישי)
   function getTodayNameHebrew() {
-    const dayIndex = new Date().getDay(); // 0 = ראשון, 1 = שני, ..., 6 = שבת
-    const daysMap = {
-      0: "ראשון",
-      1: "שני",
-      2: "שלישי",
-      3: "רביעי",
-      4: "חמישי"
-    };
-    return daysMap[dayIndex] || "ראשון"; // ברירת מחדל יום ראשון אם זה שישי-שבת
+    const dayIndex = new Date().getDay();
+    const daysMap = { 0: "ראשון", 1: "שני", 2: "שלישי", 3: "רביעי", 4: "חמישי" };
+    return daysMap[dayIndex] || "ראשון";
   }
 
   window.onload = async () => {
@@ -446,13 +439,19 @@
       document.getElementById('loader').style.display = 'none';
 
       const validDays = ["ראשון", "שני", "שלישי", "רביעי", "חמישי"];
-      
-      // קביעת היום הפעיל: לפי כתובת URL או זיהוי אוטומטי של היום הנוכחי במחשב
       if (urlDay && validDays.includes(urlDay)) {
         currentActiveDayGlobal = urlDay;
       } else {
         currentActiveDayGlobal = getTodayNameHebrew();
       }
+
+      // האזנה למקש ESC ליציאה ממצב קיוסק
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('kiosk-mode')) {
+          document.body.classList.remove('kiosk-mode');
+          drawDaily(currentActiveDayGlobal);
+        }
+      });
 
       if (urlPw === GLOBAL_DB.studentPw && urlView === "staff") {
         isStudentMode = false;
