@@ -214,7 +214,6 @@
     .staff-share-btn { background: none; border: none; color: #64748b; font-size: 0.9rem; padding: 0 4px; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #f1f5f9; margin-right: 6px; }
     .staff-share-btn:hover { color: var(--primary); background: #e2e8f0; }
 
-    /* מצב קיוסק זורם עם גלילה טבעית ובטוחה לכל מסך */
     body.kiosk-mode { 
       background-color: #ffffff !important; 
       padding: 0 !important; 
@@ -420,6 +419,19 @@
   let identifiedStudent = "";
   let currentActiveDayGlobal = "ראשון";
 
+  // פונקציה לזיהוי היום הנוכחי בשבוע (ראשון-חמישי)
+  function getTodayNameHebrew() {
+    const dayIndex = new Date().getDay(); // 0 = ראשון, 1 = שני, ..., 6 = שבת
+    const daysMap = {
+      0: "ראשון",
+      1: "שני",
+      2: "שלישי",
+      3: "רביעי",
+      4: "חמישי"
+    };
+    return daysMap[dayIndex] || "ראשון"; // ברירת מחדל יום ראשון אם זה שישי-שבת
+  }
+
   window.onload = async () => {
     try {
       const response = await fetch('data.json');
@@ -434,8 +446,12 @@
       document.getElementById('loader').style.display = 'none';
 
       const validDays = ["ראשון", "שני", "שלישי", "רביעי", "חמישי"];
+      
+      // קביעת היום הפעיל: לפי כתובת URL או זיהוי אוטומטי של היום הנוכחי במחשב
       if (urlDay && validDays.includes(urlDay)) {
         currentActiveDayGlobal = urlDay;
+      } else {
+        currentActiveDayGlobal = getTodayNameHebrew();
       }
 
       if (urlPw === GLOBAL_DB.studentPw && urlView === "staff") {
