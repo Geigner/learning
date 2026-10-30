@@ -66,7 +66,6 @@
       transition: var(--transition);
     }
     
-    /* כותרת שעה מינימלית נקייה ללא אייקון שעון */
     .time-row-header {
       font-size: 0.92rem;
       font-weight: 600;
@@ -155,7 +154,6 @@
       border-color: rgba(15, 118, 110, 0.2);
     }
 
-    /* עיצוב בועות סינון לחיצות (מורים וחודשים) */
     .badge.filter-badge {
       cursor: pointer;
       transition: all 0.2s ease;
@@ -388,8 +386,16 @@
       
       <div id="adminReportsArea" style="display:none;" class="no-print border-top pt-3">
         <h6 class="fw-bold text-secondary mb-2"><i class="fa-solid fa-clock-rotate-left me-1"></i>תיק דיווחים אישי קודם:</h6>
-        <!-- משתנים סמויים לשמירת מצב הסינון (חודש ומורה) -->
-        <input type="hidden" id="pMonth" value="ALL">
+        
+        <!-- תפריט בחירת חודשים נפתח ומינימליסטי -->
+        <div class="row g-2 mb-2 bg-light p-2 rounded-3">
+          <div class="col-md-4">
+            <select id="pMonth" class="form-select border-0 shadow-sm" onchange="filterPersonalReports()">
+              <option value="ALL">כל החודשים</option>
+            </select>
+          </div>
+        </div>
+
         <input type="hidden" id="pTeacher" value="ALL">
         
         <div id="pSummary" class="d-flex flex-wrap gap-2 mb-3 align-items-center"></div>
@@ -409,12 +415,16 @@
 
     <div class="tab-pane fade" id="tab-archive">
       <div class="row g-2 mb-3 bg-light p-2 rounded-3 no-print">
-        <div class="col-md-12">
+        <div class="col-md-8">
           <input type="text" id="fSearch" class="form-control border-0 shadow-sm" placeholder="חיפוש חופשי בתוכן הדיווח..." onkeyup="applyFilters()">
         </div>
+        <div class="col-md-4">
+          <select id="fMonth" class="form-select border-0 shadow-sm" onchange="applyFilters()">
+            <option value="ALL">כל החודשים</option>
+          </select>
+        </div>
       </div>
-      <!-- משתנים סמויים לשמירת מצב הסינון בארכיון -->
-      <input type="hidden" id="fMonth" value="ALL">
+
       <input type="hidden" id="fTeacher" value="ALL">
 
       <div id="fSummary" class="d-flex flex-wrap gap-2 mb-3 no-print align-items-center"></div>
@@ -515,6 +525,13 @@
       const uniqueStudents = [...new Set(Object.values(GLOBAL_DB.studentsMapping))].sort();
       uniqueStudents.forEach(stuName => {
         datalist.innerHTML += `<option value="${stuName}"></option>`;
+      });
+    }
+
+    if (GLOBAL_DB.availableMonths) {
+      ['fMonth', 'pMonth'].forEach(id => {
+        const el = document.getElementById(id);
+        GLOBAL_DB.availableMonths.forEach(m => el.innerHTML += `<option value="${m}">${m}</option>`);
       });
     }
 
@@ -780,7 +797,6 @@
     
     if (!GLOBAL_DB.reports) return;
 
-    // דיווחים ששייכים לתלמיד הנוכחי
     const studentReports = GLOBAL_DB.reports.filter(r => r.studentName.toLowerCase().includes(q) || r.content.toLowerCase().includes(q));
 
     const filtered = studentReports.filter(r => {
@@ -799,28 +815,19 @@
     if(filtered.length === 0) html = '<div class="text-center text-muted py-4">אין דיווחים קודמים העונים לדרישות הסינון.</div>';
     listEl.innerHTML = html;
 
-    // בניית בועות סינון (כללי, חודשים, מורים)
+    // בועה ראשונה: סה"כ דיווחים (איפוס סינון מורה)
     let summaryHtml = '';
-    
-    // בועה ראשונה: סה"כ דיווחים (איפוס סינונים / הצג הכל)
-    const isAllActive = (selMonth === "ALL" && selTeacher === "ALL") ? 'active-filter' : '';
-    summaryHtml += `<span class="badge filter-badge total-badge shadow-sm ${isAllActive}" onclick="resetPersonalFilters()">סה"כ דיווחים: ${studentReports.length}</span>`;
+    const isAllActive = (selTeacher === "ALL") ? 'active-filter' : '';
+    summaryHtml += `<span class="badge filter-badge total-badge shadow-sm ${isAllActive}" onclick="resetPersonalTeacherFilter()">סה"כ דיווחים: ${studentReports.filter(r => selMonth === "ALL" || r.month === selMonth).length}</span>`;
 
-    // בועות חודשים
-    if (GLOBAL_DB.availableMonths) {
-      GLOBAL_DB.availableMonths.forEach(m => {
-        const isMonthActive = (selMonth === m) ? 'active-filter' : '';
-        summaryHtml += ` <span class="badge filter-badge shadow-sm ${isMonthActive}" onclick="setPersonalMonth('${m}')">חודש ${m}</span>`;
-      });
-    }
-
-    // ספירת מורים מתוך דיווחי התלמיד
+    // ספירת מורים לפי החודש הנבחר
     let teacherCounts = {};
     studentReports.forEach(r => {
-      teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+      if (selMonth === "ALL" || r.month === selMonth) {
+        teacherCounts[r.teacher] = (teacherCounts[r.teacher] || 0) + 1;
+      }
     });
 
-    // בועות מורים
     for (let teacher in teacherCounts) {
       const isTeacherActive = (selTeacher === teacher) ? 'active-filter' : '';
       summaryHtml += ` <span class="badge filter-badge shadow-sm ${isTeacherActive}" onclick="filterPersonalByTeacherBadge('${teacher}')">${teacher}: ${teacherCounts[teacher]}</span>`;
@@ -829,19 +836,8 @@
     summaryEl.innerHTML = summaryHtml;
   }
 
-  function resetPersonalFilters() {
-    document.getElementById('pMonth').value = "ALL";
+  function resetPersonalTeacherFilter() {
     document.getElementById('pTeacher').value = "ALL";
-    filterPersonalReports();
-  }
-
-  function setPersonalMonth(monthVal) {
-    const mInput = document.getElementById('pMonth');
-    if (mInput.value === monthVal) {
-      mInput.value = "ALL";
-    } else {
-      mInput.value = monthVal;
-    }
     filterPersonalReports();
   }
 
@@ -864,7 +860,6 @@
 
     if (!GLOBAL_DB.reports) return;
 
-    // בסיס נתונים לחיפוש חופשי
     const searchedReports = GLOBAL_DB.reports.filter(r => {
       if (s && !r.allText.includes(s) && !r.content.toLowerCase().includes(s) && !r.studentName.toLowerCase().includes(s)) return false;
       return true;
@@ -886,20 +881,11 @@
     if(filtered.length === 0) html = '<div class="text-center text-muted py-4">אין דיווחים בארכיון העונים לדרישות הסינון.</div>';
     listEl.innerHTML = html;
 
-    // בניית בועות סינון בארכיון
     let summaryHtml = '';
-    const isArchiveAllActive = (m === "ALL" && t === "ALL") ? 'active-filter' : '';
-    summaryHtml += `<span class="badge filter-badge total-badge shadow-sm ${isArchiveAllActive}" onclick="resetArchiveFilters()">נמצאו ${searchedReports.length} דיווחים</span>`;
+    const baseCount = searchedReports.filter(r => m === "ALL" || r.month === m).length;
+    const isArchiveAllActive = (t === "ALL") ? 'active-filter' : '';
+    summaryHtml += `<span class="badge filter-badge total-badge shadow-sm ${isArchiveAllActive}" onclick="resetArchiveTeacherFilter()">נמצאו ${baseCount} דיווחים</span>`;
 
-    // בועות חודשים בארכיון
-    if (GLOBAL_DB.availableMonths) {
-      GLOBAL_DB.availableMonths.forEach(monthItem => {
-        const isMonthActive = (m === monthItem) ? 'active-filter' : '';
-        summaryHtml += ` <span class="badge filter-badge shadow-sm ${isMonthActive}" onclick="setArchiveMonth('${monthItem}')">חודש ${monthItem}</span>`;
-      });
-    }
-
-    // ספירת מורים לפי החיפוש החופשי והחודש
     let teacherCounts = {};
     searchedReports.forEach(r => {
       if (m === "ALL" || r.month === m) {
@@ -915,19 +901,8 @@
     summaryEl.innerHTML = summaryHtml;
   }
 
-  function resetArchiveFilters() {
-    document.getElementById('fMonth').value = "ALL";
+  function resetArchiveTeacherFilter() {
     document.getElementById('fTeacher').value = "ALL";
-    applyFilters();
-  }
-
-  function setArchiveMonth(monthVal) {
-    const mInput = document.getElementById('fMonth');
-    if (mInput.value === monthVal) {
-      mInput.value = "ALL";
-    } else {
-      mInput.value = monthVal;
-    }
     applyFilters();
   }
 
