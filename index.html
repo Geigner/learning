@@ -453,7 +453,6 @@
         currentActiveDayGlobal = getTodayNameHebrew();
       }
 
-      // האזנה למקש ESC ליציאה ממצב קיוסק
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && document.body.classList.contains('kiosk-mode')) {
           document.body.classList.remove('kiosk-mode');
