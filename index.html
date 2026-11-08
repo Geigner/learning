@@ -86,21 +86,25 @@
     .time-lessons-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
       flex-grow: 1;
       align-items: center;
+      justify-content: flex-start;
     }
 
+    /* עיצוב כרטיסיית שיעור מאוחדת וממורכזת - מונעת פיזור מיותר */
     .lesson-slot-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 10px 14px;        
-      flex: 1 1 0px;
-      min-width: 200px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 16px;        
+      flex: 1 1 240px;
+      max-width: 420px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
 
     .lesson-slot-banner {
@@ -120,21 +124,32 @@
 
     .slot-top-line {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      margin-bottom: 3px;
+      gap: 12px;
+      margin-bottom: 8px;
       font-size: 0.85rem;
+      width: 100%;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 6px;
     }
     .slot-teacher-text { color: var(--text-muted); font-weight: 600; }
-    .slot-room-text { color: #0284c7; font-weight: 700; background: #e0f2fe; padding: 1px 6px; border-radius: 10px; font-size: 0.78rem; }
+    .slot-room-text { color: #0284c7; font-weight: 700; background: #e0f2fe; padding: 1px 8px; border-radius: 10px; font-size: 0.78rem; }
 
+    /* מקצוע הלימוד והתלמידים מרוכזים יחד במקום אחד ברור */
     .slot-main-info {
-      color: var(--text-main);
-      font-size: 1.05rem;
+      color: var(--primary);
+      font-size: 1.1rem;
       font-weight: 700;
-      line-height: 1.25;
+      line-height: 1.4;
       white-space: normal; 
       overflow: visible;
+      text-align: center;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      width: 100%;
     }
 
     .time-block-row.active-time-row {
@@ -445,7 +460,6 @@
         currentActiveDayGlobal = getTodayNameHebrew();
       }
 
-      // האזנה למקש ESC ליציאה ממצב קיוסק
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && document.body.classList.contains('kiosk-mode')) {
           document.body.classList.remove('kiosk-mode');
